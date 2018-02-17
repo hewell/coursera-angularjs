@@ -14,29 +14,28 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     del = require('del');
 
-
     gulp.task('jshint', function() {
       return gulp.src('app/scripts/**/*.js')
-      .pipe(jshint())
-      .pipe(jshint.reporter(stylish));
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
     });
 
     // Clean
     gulp.task('clean', function() {
-        return del(['dist']);
+      return del(['dist']);
     });
 
     // Default task
     gulp.task('default', ['clean'], function() {
-        gulp.start('usemin', 'imagemin','copyfonts');
+      gulp.start('usemin', 'imagemin','copyfonts');
     });
     gulp.task('usemin',['jshint'], function () {
-      return gulp.src('./app/menu.html')
-          .pipe(usemin({
-            css:[minifycss(),rev()],
-            js: [uglify(),rev()]
-          }))
-          .pipe(gulp.dest('dist/'));
+      return gulp.src('./app/dishdetail.html')
+        .pipe(usemin({
+          css:[minifycss(),rev()],
+          js: [uglify(),rev()]
+        }))
+        .pipe(gulp.dest('dist/'));
     });
 
     // Images
@@ -53,13 +52,13 @@ var gulp = require('gulp'),
        gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
        .pipe(gulp.dest('./dist/fonts'));
     });
+
     // Watch
     gulp.task('watch', ['browser-sync'], function() {
-    // Watch .js files
-    gulp.watch('{app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', ['usemin']);
-    // Watch image files
-    gulp.watch('app/images/**/*', ['imagemin']);
-
+      // Watch .js files
+      gulp.watch('{app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', ['usemin']);
+      // Watch image files
+      gulp.watch('app/images/**/*', ['imagemin']);
     });
 
     gulp.task('browser-sync', ['default'], function () {
@@ -74,9 +73,10 @@ var gulp = require('gulp'),
       browserSync.init(files, {
         server: {
            baseDir: "dist",
-           index: "menu.html"
+           index: "dishdetail.html"
         }
       });
-          // Watch any files in dist/, reload on change
+
+      // Watch any files in dist/, reload on change
       gulp.watch(['dist/**']).on('change', browserSync.reload);
     });
